@@ -1,0 +1,20 @@
+datasource:
+    driverClassName: org.postgresql.Driver
+server:
+    port: 9999
+spring:
+    datasource:
+        initialSize: 5
+        maxActive: 10
+        maxIdle: 5
+        minIdle: 2
+        password: lolo
+        platform: postgres
+        removeAbandoned: true
+        url: jdbc:postgresql://localhost:5432/lolo
+        username: lolo
+    jpa:
+        database: POSTGRESQL
+        hibernate:
+            ddl-auto: create-drop
+        show-sql: true
