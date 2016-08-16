@@ -24,11 +24,11 @@ import static org.junit.Assert.*;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class IngredientControllerIntegrationTests {
 
-    @Autowired
-    private TestRestTemplate testRestTemplate;
+    private static final ParameterizedTypeReference<List<Ingredient>> ingrListType =
+            new ParameterizedTypeReference<List<Ingredient>>() {};
 
     @Autowired
-    private IngredientRepository repository;
+    private TestRestTemplate testRestTemplate;
 
     private Ingredient ingredient;
 
@@ -37,14 +37,14 @@ public class IngredientControllerIntegrationTests {
         ingredient = new Ingredient();
         ingredient.setId(1L);
         ingredient.setName("foo");
-        repository.save(ingredient);
     }
 
     @Test
     public void test() {
-        ParameterizedTypeReference<List<Ingredient>> type = new ParameterizedTypeReference<List<Ingredient>>() {};
+        ResponseEntity<Ingredient> postResponse = testRestTemplate.postForEntity("/api/ingredients", ingredient, Ingredient.class);
+        assertEquals(ingredient, postResponse.getBody());
         ResponseEntity<List<Ingredient>> response =
-                testRestTemplate.exchange("/api/ingredients", HttpMethod.GET, HttpEntity.EMPTY, type);
+                testRestTemplate.exchange("/api/ingredients", HttpMethod.GET, HttpEntity.EMPTY, ingrListType);
         assertEquals(Arrays.asList(ingredient), response.getBody());
     }
 }
