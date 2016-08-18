@@ -1,19 +1,13 @@
 package gr.lolo.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-//@AllArgsConstructor(staticName = "of")
-@EqualsAndHashCode
-@Getter
-@Setter
+@Data
 public class Recipe {
 
     @Id

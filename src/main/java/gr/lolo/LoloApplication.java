@@ -23,17 +23,17 @@ public class LoloApplication {
     @Bean
     public CommandLineRunner cli(RecipeRepository repo) {
         return args -> {
-            Ingredient i1 = Ingredient.of(0L, "aygo", new HashSet<>());
-            Ingredient i2 = Ingredient.of(0L, "patata", new HashSet<>());
-
-            Recipe r = new Recipe();
-            r.setName("auga me patates");
-            Set<Ingredient> ingrs = new HashSet<>(Arrays.asList(i1, i2));
-            r.setIngredients(ingrs);
+//            Ingredient i1 = Ingredient.of(0L, "aygo", new HashSet<>());
+//            Ingredient i2 = Ingredient.of(0L, "patata", new HashSet<>());
+//
+//            Recipe r = new Recipe();
+//            r.setName("auga me patates");
+//            Set<Ingredient> ingrs = new HashSet<>(Arrays.asList(i1, i2));
+//            r.setIngredients(ingrs);
 //            r.addIngredient(i1);
 //            r.addIngredient(i2);
 
-            repo.save(r);
+//            repo.save(r);
         };
     }
 }

@@ -1,18 +1,13 @@
 package gr.lolo.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Value;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@AllArgsConstructor(staticName = "of")
-@EqualsAndHashCode
-@Getter
+@Data
 public class Ingredient {
 
     @Id
@@ -24,4 +19,12 @@ public class Ingredient {
 
     @ManyToMany(mappedBy = "ingredients")
     private Set<Recipe> recipes = new HashSet<>();
+
+    @Override
+    public String toString() {
+        return "Ingredient{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
