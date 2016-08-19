@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
@@ -14,4 +15,5 @@ public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
     @Query("select i from ingredient i where i.name like :name%")
     List<Ingredient> startsWith(@Param("name") String name);
 
+    Optional<Ingredient> findOneByName(String name);
 }
