@@ -24,9 +24,19 @@ public class SlugifierTest {
         assertEquals("kounoupidi-me-arxidia", slugifier.slugify("Κουνουπίδι με αρχίδια"));
         assertEquals("a-la-krem", slugifier.slugify("Α-λα κρεμ"));
 
-        assertEquals("m%27-aresoun-ta-paidakia", slugifier.slugify("μ' αρέσουν τα παϊδάκια"));
+        assertEquals("m-aresoun-ta-paidakia", slugifier.slugify("μ' αρέσουν τα παϊδάκια"));
 
-        assertEquals("%26mpap", slugifier.slugify("&μπαπ"));
+        assertEquals("mpap", slugifier.slugify("&μπαπ"));
+
+    }
+
+    @Test
+    public void fix_me() {
+        assertEquals("mpap", slugifier.slugify("μπαπ "));
+        assertEquals("mpap", slugifier.slugify("μπαπ  "));
+        assertEquals("mpap-mpoump", slugifier.slugify("μπαπ--μπουμπ"));
+        assertEquals("mpap-mpoump", slugifier.slugify("μπαπ  μπουμπ"));
+        assertEquals("mpap", slugifier.slugify("μπαπ!@#$%^&*()_+={}|[]\\:\";',./<>?"));
     }
 
     @Test
