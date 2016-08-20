@@ -3,9 +3,7 @@ package gr.lolo.util;
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.UriUtils;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -43,19 +41,16 @@ public class Slugifier {
             .build();
 
     public String slugify(String str) {
-        String slugified = StringUtils.stripAccents(str)
+        return StringUtils.stripAccents(str)
                 .toLowerCase()
-                .replace(' ', '-')
+                .replaceAll("-+"," ")
+                .trim()
+                .replaceAll(" +", "-")
                 .chars()
                 .mapToObj(i -> (char) i)
                 .map(greekChar -> greekToLatinMap.getOrDefault(greekChar, String.valueOf(greekChar)))
-                .collect(joining());
-        try {
-            return UriUtils.encode(slugified, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            // should never happen
-            throw new IllegalArgumentException(e);
-        }
+                .collect(joining())
+                .replaceAll("[^-A-Za-z0-9]", "");
     }
 
     public String slugify(String str, Supplier<List<String>> exclusionsSup) {
@@ -63,26 +58,10 @@ public class Slugifier {
         List<String> exclusions = exclusionsSup.get();
         if (exclusions.contains(slugified)) {
             slugified += "-";
-            int idNum = getMinExcludedIdNum(exclusions);
+            int idNum = 0;
             while (exclusions.contains(slugified + ++idNum));
             return slugified + idNum;
         }
         return slugified;
-    }
-
-    private int getMinExcludedIdNum(List<String> exclusions) {
-        return exclusions.stream()
-                .map(s -> {
-                    int dashIndx = s.lastIndexOf('-');
-                    if (dashIndx > -1) {
-                        String possibleNum = s.substring(++dashIndx);
-                        if (StringUtils.isNumeric(possibleNum)) {
-                            return Integer.parseInt(possibleNum);
-                        }
-                    }
-                    return 0;
-                })
-                .min(Integer::compareTo)
-                .orElse(0);
     }
 }

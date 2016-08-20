@@ -31,19 +31,19 @@ public class SlugifierTest {
     }
 
     @Test
-    public void fix_me() {
+    public void slugify_invalid_characters_test() {
         assertEquals("mpap", slugifier.slugify("μπαπ "));
         assertEquals("mpap", slugifier.slugify("μπαπ  "));
         assertEquals("mpap-mpoump", slugifier.slugify("μπαπ--μπουμπ"));
+        assertEquals("mpap-mpoump", slugifier.slugify(" μπαπ- -μπουμπ"));
         assertEquals("mpap-mpoump", slugifier.slugify("μπαπ  μπουμπ"));
+        assertEquals("mpap-mpoump", slugifier.slugify("-μπαπ  μπουμπ-"));
         assertEquals("mpap", slugifier.slugify("μπαπ!@#$%^&*()_+={}|[]\\:\";',./<>?"));
     }
 
     @Test
     public void slugify_with_exclusions_test() {
         assertEquals("patata-1", slugifier.slugify("πατάτα", () -> Arrays.asList("patata")));
-        assertEquals("patata", slugifier.slugify("πατάτα", () -> Arrays.asList("patata-0", "patata-1")));
-        assertEquals("patata-1", slugifier.slugify("πατάτα", () -> Arrays.asList("patata", "patata-2")));
         assertEquals("patata-2", slugifier.slugify("πατάτα", () -> Arrays.asList("patata", "patata-1")));
 
         assertEquals("elies-throumpes-2", slugifier.slugify("ελιές θρούμπες", () -> Arrays.asList("elies-throumpes", "elies-throumpes-1")));
