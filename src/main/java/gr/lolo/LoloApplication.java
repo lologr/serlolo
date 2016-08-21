@@ -36,14 +36,14 @@ public class LoloApplication {
 
 //            repo.save(r);
 
-            recipeService.insert("i1", "a", "b");
-            recipeService.insert("i2", "a", "c");
-            recipeService.insert("i3", "a", "b", "c");
-            recipeService.insert("i4", "b", "c", "d");
-            recipeService.insert("i5", "b", "d", "e");
-            recipeService.insert("i6", "d", "e");
-            recipeService.insert("i7", "e", "f");
-            recipeService.insert("i8", "f", "g", "h");
+//            recipeService.insert("i1", "a", "b");
+//            recipeService.insert("i2", "a", "c");
+//            recipeService.insert("i3", "a", "b", "c");
+//            recipeService.insert("i4", "b", "c", "d");
+//            recipeService.insert("i5", "b", "d", "e");
+//            recipeService.insert("i6", "d", "e");
+//            recipeService.insert("i7", "e", "f");
+//            recipeService.insert("i8", "f", "g", "h");
         };
     }
 }
