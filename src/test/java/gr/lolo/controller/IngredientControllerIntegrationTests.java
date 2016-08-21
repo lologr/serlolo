@@ -1,6 +1,7 @@
 package gr.lolo.controller;
 
 import gr.lolo.domain.Ingredient;
+import gr.lolo.service.IngredientService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,19 +30,23 @@ public class IngredientControllerIntegrationTests {
     @Autowired
     private TestRestTemplate testRestTemplate;
 
+    @Autowired
+    private IngredientService service;
+
     private Ingredient ingredient;
 
     @Before
     public void setup() {
         ingredient = new Ingredient();
-        ingredient.setId(1L);
+//        ingredient.setId(1L);
         ingredient.setName("foo");
+        service.slugify(ingredient);
     }
 
     @Test
     public void test() {
         ResponseEntity<Ingredient> postResponse = testRestTemplate.postForEntity("/api/ingredients", ingredient, Ingredient.class);
-        assertEquals(ingredient, postResponse.getBody());
+        assertEquals(ingredient,  postResponse.getBody());
         ResponseEntity<List<Ingredient>> response =
                 testRestTemplate.exchange("/api/ingredients", HttpMethod.GET, HttpEntity.EMPTY, ingrListType);
         assertEquals(Arrays.asList(ingredient), response.getBody());

@@ -1,5 +1,6 @@
 package gr.lolo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,7 +15,11 @@ public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
+    @JsonIgnore
     private Long id;
+
+    @Column(name = "slug", nullable = false)
+    private String slug;
 
     private String name;
 

@@ -1,6 +1,7 @@
 package gr.lolo.domain;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,14 +14,18 @@ import java.util.Set;
 @Getter
 @Setter
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
-        property = "@id",
+        property = "@slug",
         scope = Recipe.class)
 public class Ingredient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
+    @JsonIgnore
     private Long id;
+
+    @Column(name = "slug", nullable = false)
+    private String slug;
 
     private String name;
 
@@ -34,19 +39,23 @@ public class Ingredient {
 
         Ingredient that = (Ingredient) o;
 
-        return id != null ? id.equals(that.id) : that.id == null;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        return slug != null ? slug.equals(that.slug) : that.slug == null;
 
     }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (slug != null ? slug.hashCode() : 0);
+        return result;
     }
 
     @Override
     public String toString() {
         return "Ingredient{" +
                 "id=" + id +
+                ", slug='" + slug + '\'' +
                 ", name='" + name + '\'' +
                 '}';
     }
