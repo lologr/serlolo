@@ -40,16 +40,13 @@ public class Ingredient {
 
         Ingredient that = (Ingredient) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        return slug != null ? slug.equals(that.slug) : that.slug == null;
+        return id != null ? id.equals(that.id) : that.id == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (slug != null ? slug.hashCode() : 0);
-        return result;
+        return id != null ? id.hashCode() : 0;
     }
 
     @Override

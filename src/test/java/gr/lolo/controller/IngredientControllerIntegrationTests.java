@@ -1,7 +1,7 @@
 package gr.lolo.controller;
 
 import gr.lolo.domain.Ingredient;
-import gr.lolo.service.IngredientService;
+import gr.lolo.util.Slugifier;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +15,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -31,24 +30,30 @@ public class IngredientControllerIntegrationTests {
     private TestRestTemplate testRestTemplate;
 
     @Autowired
-    private IngredientService service;
+    private Slugifier slugifier;
 
     private Ingredient ingredient;
 
     @Before
     public void setup() {
         ingredient = new Ingredient();
-//        ingredient.setId(1L);
         ingredient.setName("foo");
-        service.slugify(ingredient);
+        ingredient.setSlug(slugifier.slugify(ingredient.getName()));
     }
 
     @Test
     public void test() {
         ResponseEntity<Ingredient> postResponse = testRestTemplate.postForEntity("/api/ingredients", ingredient, Ingredient.class);
-        assertEquals(ingredient,  postResponse.getBody());
+        Ingredient responseIngredient = postResponse.getBody();
+        assertEquals(ingredient.getName(), responseIngredient.getName());
+        assertEquals(ingredient.getSlug(), responseIngredient.getSlug());
+
         ResponseEntity<List<Ingredient>> response =
                 testRestTemplate.exchange("/api/ingredients", HttpMethod.GET, HttpEntity.EMPTY, ingrListType);
-        assertEquals(Arrays.asList(ingredient), response.getBody());
+        List<Ingredient> responseIngredients = response.getBody();
+        assertEquals(1, responseIngredients.size());
+        Ingredient responseFirstIngredient = responseIngredients.get(0);
+        assertEquals(this.ingredient.getName(), responseFirstIngredient.getName());
+        assertEquals(this.ingredient.getSlug(), responseFirstIngredient.getSlug());
     }
 }
