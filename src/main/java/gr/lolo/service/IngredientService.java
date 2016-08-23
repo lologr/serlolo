@@ -17,17 +17,18 @@ public class IngredientService {
     @Autowired
     private Slugifier slugifier;
 
-    public Ingredient upsetIngredient(String name) {
+    public Ingredient upsertIngredient(Ingredient ingredient) {
+        return upsertIngredient(ingredient.getName());
+    }
+
+    public Ingredient upsertIngredient(String name) {
         Optional<Ingredient> ingr = ingredientRepository.findOneByName(name);
         return ingr.orElseGet(() -> {
             Ingredient newIngr = new Ingredient();
             newIngr.setName(name);
+            newIngr.setSlug(slugifier.slugify(name));
             return ingredientRepository.save(newIngr);
         });
-    }
-
-    public void slugify(Ingredient ingredient) {
-        ingredient.setSlug(slugifier.slugify(ingredient.getName()));
     }
 
 }

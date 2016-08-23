@@ -9,6 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity(name = "ingredient")
 @Getter
@@ -57,6 +58,8 @@ public class Ingredient {
                 "id=" + id +
                 ", slug='" + slug + '\'' +
                 ", name='" + name + '\'' +
+                ", recipes=" + recipes.stream().map(Recipe::getName)
+                .collect(Collectors.joining(",")) +
                 '}';
     }
 }

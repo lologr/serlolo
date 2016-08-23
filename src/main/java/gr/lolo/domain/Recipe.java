@@ -2,6 +2,8 @@ package gr.lolo.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -10,6 +12,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@ToString
 public class Recipe {
 
     @Id
@@ -21,6 +24,8 @@ public class Recipe {
     @Column(name = "slug", nullable = false)
     private String slug;
 
+    @NotBlank
+    @Length(min = 4, max = 60)
     private String name;
 
     @ManyToMany

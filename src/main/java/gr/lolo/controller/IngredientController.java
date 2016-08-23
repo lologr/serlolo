@@ -28,7 +28,6 @@ public class IngredientController {
 
     @RequestMapping(method = RequestMethod.POST)
     public Ingredient createIngredient(@RequestBody Ingredient ingredient) {
-        service.slugify(ingredient);
-        return ingredientRepository.save(ingredient);
+        return service.upsertIngredient(ingredient);
     }
 }
