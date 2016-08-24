@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -14,8 +15,8 @@ import java.util.stream.Collectors;
 @Entity(name = "ingredient")
 @Getter
 @Setter
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
-        property = "@slug",
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "slug",
         scope = Recipe.class)
 public class Ingredient {
 
@@ -28,6 +29,7 @@ public class Ingredient {
     @Column(name = "slug", nullable = false)
     private String slug;
 
+    @NotBlank
     private String name;
 
     @ManyToMany(mappedBy = "ingredients")
