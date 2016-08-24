@@ -26,6 +26,7 @@ public class Recipe {
 
     @NotBlank
     @Length(min = 4, max = 60)
+    @Column(unique = true)
     private String name;
 
     @ManyToMany
