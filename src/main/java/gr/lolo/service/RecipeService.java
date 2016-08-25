@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -86,5 +83,18 @@ public class RecipeService {
             return recipeRepository.save(existingRecipe);
         }
         return recipeRepository.save(recipe);
+    }
+
+    public List<RecipeResource> findAllRecipes() {
+        return recipeRepository.findAll()
+                .stream()
+                .map(recipeConverter::convert)
+                .collect(Collectors.toList());
+    }
+
+    public RecipeResource findRecipeById(String id) {
+        return recipeRepository.findOneBySlug(id)
+                .map(recipeConverter::convert)
+                .orElseThrow(() -> new IllegalArgumentException()); // TODO exception
     }
 }
