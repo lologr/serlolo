@@ -53,7 +53,7 @@ public class IngredientControllerIntegrationTests {
         List<Ingredient> responseIngredients = response.getBody();
         assertEquals(1, responseIngredients.size());
         Ingredient responseFirstIngredient = responseIngredients.get(0);
-        assertEquals(this.ingredient.getName(), responseFirstIngredient.getName());
-        assertEquals(this.ingredient.getSlug(), responseFirstIngredient.getSlug());
+        assertEquals(ingredient.getName(), responseFirstIngredient.getName());
+        assertEquals(ingredient.getSlug(), responseFirstIngredient.getSlug());
     }
 }
