@@ -18,14 +18,11 @@ public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    @JsonIgnore
     private Long id;
 
     @Column(name = "slug", nullable = false)
     private String slug;
 
-    @NotBlank
-    @Length(min = 4, max = 60)
     @Column(unique = true)
     private String name;
 

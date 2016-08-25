@@ -1,11 +1,9 @@
 package gr.lolo.domain;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -23,13 +21,11 @@ public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    @JsonIgnore
     private Long id;
 
     @Column(name = "slug", nullable = false)
     private String slug;
 
-    @NotBlank
     private String name;
 
     @ManyToMany(mappedBy = "ingredients")

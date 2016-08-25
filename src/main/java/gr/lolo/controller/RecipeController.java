@@ -1,6 +1,6 @@
 package gr.lolo.controller;
 
-import gr.lolo.domain.Recipe;
+import gr.lolo.resource.RecipeResource;
 import gr.lolo.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,7 +18,7 @@ public class RecipeController {
     private RecipeService recipeService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public Recipe createRecipe(@Valid @RequestBody Recipe recipe) {
+    public RecipeResource createRecipe(@Valid @RequestBody RecipeResource recipe) {
         return recipeService.save(recipe);
     }
 }
