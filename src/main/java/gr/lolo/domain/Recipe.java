@@ -1,9 +1,8 @@
 package gr.lolo.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -26,8 +25,17 @@ public class Recipe {
     @Column(unique = true)
     private String name;
 
+    private String instructions;
+
     @ManyToMany
     private Set<Ingredient> ingredients = new HashSet<>();
+
+    @ManyToMany
+    private Set<Tag> tags = new HashSet<>();
+
+    private Integer prepTime;
+
+    private Integer difficulty;
 
     public void addIngredient(Ingredient ingredient) {
         ingredients.add(ingredient);

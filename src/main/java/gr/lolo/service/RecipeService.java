@@ -3,9 +3,11 @@ package gr.lolo.service;
 import gr.lolo.converter.RecipeConverter;
 import gr.lolo.domain.Ingredient;
 import gr.lolo.domain.Recipe;
+import gr.lolo.domain.Tag;
 import gr.lolo.repository.RecipeRepository;
 import gr.lolo.resource.IngredientResource;
 import gr.lolo.resource.RecipeResource;
+import gr.lolo.resource.TagResource;
 import gr.lolo.util.Slugifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,9 @@ public class RecipeService {
 
     @Autowired
     private IngredientService ingredientService;
+
+    @Autowired
+    private TagService tagService;
 
     @Autowired
     private RecipeRepository recipeRepository;
@@ -60,6 +65,14 @@ public class RecipeService {
                 .collect(Collectors.toSet());
 
         recipe.setIngredients(newIngrs);
+
+        Set<Tag> newTags = resource.getTags().stream()
+                .map(TagResource::getName)
+                .distinct()
+                .map(tagService::upsertTag)
+                .collect(Collectors.toSet());
+
+        recipe.setTags(newTags);
 
         return recipeConverter.convert(upsertRecipe(recipe));
 

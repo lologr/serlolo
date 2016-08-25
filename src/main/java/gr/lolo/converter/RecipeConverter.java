@@ -14,6 +14,9 @@ public class RecipeConverter implements Converter<Recipe, RecipeResource> {
     @Autowired
     private IngredientConverter ingredientConverter;
 
+    @Autowired
+    private TagConverter tagConverter;
+
     @Override
     public RecipeResource convert(Recipe recipe) {
         RecipeResource resource = new RecipeResource();
@@ -23,6 +26,10 @@ public class RecipeConverter implements Converter<Recipe, RecipeResource> {
 
         resource.setIngredients(recipe.getIngredients()
                 .stream().map(ingredientConverter::convert)
+                .collect(Collectors.toList()));
+
+        resource.setTags(recipe.getTags()
+                .stream().map(tagConverter::convert)
                 .collect(Collectors.toList()));
 
         return resource;
