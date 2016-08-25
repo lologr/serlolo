@@ -1,7 +1,8 @@
 package gr.lolo.controller;
 
-import gr.lolo.domain.Ingredient;
 import gr.lolo.domain.Recipe;
+import gr.lolo.resource.IngredientResource;
+import gr.lolo.resource.RecipeResource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
-import java.util.HashSet;
 
 import static org.junit.Assert.assertEquals;
 
@@ -37,18 +37,18 @@ public class RecipeControllerIntegrationTest {
 
     @Test
     public void create_recipe_with_two_ingredients() {
-        Recipe recipe = new Recipe();
+        RecipeResource recipe = new RecipeResource();
         recipe.setName("foo2");
 
-        Ingredient ingr1 = new Ingredient();
+        IngredientResource ingr1 = new IngredientResource();
         ingr1.setName("bar");
 
-        Ingredient ingr2 = new Ingredient();
+        IngredientResource ingr2 = new IngredientResource();
         ingr2.setName("baz");
 
-        recipe.setIngredients(new HashSet<>(Arrays.asList(ingr1, ingr2)));
+        recipe.setIngredients(Arrays.asList(ingr1, ingr2));
 
-        ResponseEntity<Recipe> response = rest.postForEntity("/api/recipes", recipe, Recipe.class);
+        ResponseEntity<RecipeResource> response = rest.postForEntity("/api/recipes", recipe, RecipeResource.class);
         assertEquals(2, response.getBody().getIngredients().size());
         // TODO check payload data
 
