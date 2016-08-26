@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
 
     @Query("select i from ingredient i where i.name like :name%")
-    List<Ingredient> startsWith(@Param("name") String name);
+    List<Ingredient> startWith(@Param("name") String name);
 
     Optional<Ingredient> findOneByName(String name);
 }
