@@ -12,7 +12,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-public class Recipe {
+public class Recipe extends BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
