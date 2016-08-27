@@ -27,21 +27,23 @@ public class LoloApplication {
                                  IngredientService ingredientService,
                                  RecipeService recipeService) {
         return args -> {
-            Ingredient i1 = ingredientService.upsertIngredient("augo");
-            Ingredient i2 = ingredientService.upsertIngredient("patates");
-
-            Recipe r = new Recipe();
-            r.setName("auga me patates");
-            r.setSlug("auga-me-patates");
-            Set<Ingredient> ingrs = new HashSet<>(Arrays.asList(i1, i2));
-            r.setIngredients(ingrs);
-
-
-            Recipe rNew = repo.save(r);
+//            Ingredient i1 = ingredientService.upsertIngredient("augo");
+//            Ingredient i2 = ingredientService.upsertIngredient("patates");
 //
+//            Recipe r = new Recipe();
+//            r.setName("auga me patates");
+//            r.setSlug("auga-me-patates");
+//            Set<Ingredient> ingrs = new HashSet<>(Arrays.asList(i1, i2));
+//            r.setIngredients(ingrs);
+//
+//
+//            Recipe rNew = repo.save(r);
+////
 //            rNew.setPrepTime(5);
-
+//
 //            repo.save(rNew);
+
+            System.out.println(recipeService.findRecipeById("auga-me-patates"));
 
 
 

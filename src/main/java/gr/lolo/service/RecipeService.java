@@ -92,6 +92,7 @@ public class RecipeService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public RecipeResource findRecipeById(String id) {
         return recipeRepository.findOneBySlug(id)
                 .map(recipeConverter::convert)

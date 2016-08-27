@@ -11,7 +11,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@ToString
+@ToString(callSuper = true)
 public class Recipe extends BaseModel {
 
     @Id
@@ -36,6 +36,11 @@ public class Recipe extends BaseModel {
     private Set<Ingredient> ingredients = new HashSet<>();
 
     @ManyToMany
+    @JoinTable(
+            name = "recipe_tags",
+            joinColumns = @JoinColumn(name = "recipe_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id")
+    )
     private Set<Tag> tags = new HashSet<>();
 
     private Integer prepTime;
