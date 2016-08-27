@@ -1,12 +1,19 @@
 package gr.lolo;
 
+import gr.lolo.domain.Ingredient;
+import gr.lolo.domain.Recipe;
 import gr.lolo.repository.IngredientRepository;
 import gr.lolo.repository.RecipeRepository;
+import gr.lolo.service.IngredientService;
 import gr.lolo.service.RecipeService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 @SpringBootApplication
 public class LoloApplication {
@@ -17,24 +24,26 @@ public class LoloApplication {
 
     @Bean
     public CommandLineRunner cli(RecipeRepository repo,
-                                 IngredientRepository ingrRepo,
+                                 IngredientService ingredientService,
                                  RecipeService recipeService) {
         return args -> {
-//            Ingredient i1 = new Ingredient();
-//            i1.setName("augo");
-//            i1 = ingrRepo.save(i1);
-//            Ingredient i2 = new Ingredient();
-//            i2.setName("patata");
-//            i2 = ingrRepo.save(i2);
-//
-//            Recipe r = new Recipe();
-//            r.setName("auga me patates");
-//            Set<Ingredient> ingrs = new HashSet<>(Arrays.asList(i1, i2));
-//            r.setIngredients(ingrs);
-//            r.addIngredient(i1);
-//            r.addIngredient(i2);
+            Ingredient i1 = ingredientService.upsertIngredient("augo");
+            Ingredient i2 = ingredientService.upsertIngredient("patates");
 
-//            repo.save(r);
+            Recipe r = new Recipe();
+            r.setName("auga me patates");
+            r.setSlug("auga-me-patates");
+            Set<Ingredient> ingrs = new HashSet<>(Arrays.asList(i1, i2));
+            r.setIngredients(ingrs);
+
+
+            Recipe rNew = repo.save(r);
+//
+//            rNew.setPrepTime(5);
+
+//            repo.save(rNew);
+
+
 
 //            recipeService.insert("i1", "a", "b");
 //            recipeService.insert("i2", "a", "c");

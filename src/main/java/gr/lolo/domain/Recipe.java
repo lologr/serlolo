@@ -15,7 +15,7 @@ import java.util.Set;
 public class Recipe extends BaseModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -28,6 +28,11 @@ public class Recipe extends BaseModel {
     private String instructions;
 
     @ManyToMany
+    @JoinTable(
+            name = "recipe_ingredients",
+            joinColumns = @JoinColumn(name = "recipe_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "ingredient_id", referencedColumnName = "id")
+    )
     private Set<Ingredient> ingredients = new HashSet<>();
 
     @ManyToMany
