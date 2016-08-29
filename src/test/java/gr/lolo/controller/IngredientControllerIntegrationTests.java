@@ -1,7 +1,9 @@
 package gr.lolo.controller;
 
+import gr.lolo.TestUtil;
 import gr.lolo.domain.Ingredient;
 import gr.lolo.util.Slugifier;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,11 +36,19 @@ public class IngredientControllerIntegrationTests {
 
     private Ingredient ingredient;
 
+    @Autowired
+    private TestUtil testUtil;
+
     @Before
     public void setup() {
         ingredient = new Ingredient();
         ingredient.setIngredient("foo");
         ingredient.setSlug(slugifier.slugify(ingredient.getIngredient()));
+    }
+
+    @After
+    public void tearDown() {
+        testUtil.wipeAllTestData();
     }
 
     @Test

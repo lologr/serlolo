@@ -1,8 +1,10 @@
 package gr.lolo.controller;
 
+import gr.lolo.TestUtil;
 import gr.lolo.domain.Recipe;
 import gr.lolo.resource.IngredientResource;
 import gr.lolo.resource.RecipeResource;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,14 @@ public class RecipeControllerIntegrationTest {
 
     @Autowired
     private TestRestTemplate rest;
+
+    @Autowired
+    private TestUtil testUtil;
+
+    @After
+    public void tearDown() {
+        testUtil.wipeAllTestData();
+    }
 
     @Test
     public void creating_recipe_with_the_same_name() {
