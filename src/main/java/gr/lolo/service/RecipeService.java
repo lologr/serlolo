@@ -76,7 +76,7 @@ public class RecipeService {
     }
 
     private Recipe upsertRecipe(Recipe recipe) {
-        Optional<Recipe> foundByName = recipeRepository.findOneByName(recipe.getTitle());
+        Optional<Recipe> foundByName = recipeRepository.findOneByTitle(recipe.getTitle());
         if (foundByName.isPresent()) {
             Recipe existingRecipe = foundByName.get();
             existingRecipe.setIngredients(recipe.getIngredients());

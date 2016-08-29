@@ -37,15 +37,15 @@ public class IngredientControllerIntegrationTests {
     @Before
     public void setup() {
         ingredient = new Ingredient();
-        ingredient.setName("foo");
-        ingredient.setSlug(slugifier.slugify(ingredient.getName()));
+        ingredient.setIngredient("foo");
+        ingredient.setSlug(slugifier.slugify(ingredient.getIngredient()));
     }
 
     @Test
     public void test() {
         ResponseEntity<Ingredient> postResponse = testRestTemplate.postForEntity("/api/ingredients", ingredient, Ingredient.class);
         Ingredient responseIngredient = postResponse.getBody();
-        assertEquals(ingredient.getName(), responseIngredient.getName());
+        assertEquals(ingredient.getIngredient(), responseIngredient.getIngredient());
         assertEquals(ingredient.getSlug(), responseIngredient.getSlug());
 
         ResponseEntity<List<Ingredient>> response =
@@ -53,7 +53,7 @@ public class IngredientControllerIntegrationTests {
         List<Ingredient> responseIngredients = response.getBody();
         assertEquals(1, responseIngredients.size());
         Ingredient responseFirstIngredient = responseIngredients.get(0);
-        assertEquals(ingredient.getName(), responseFirstIngredient.getName());
+        assertEquals(ingredient.getIngredient(), responseFirstIngredient.getIngredient());
         assertEquals(ingredient.getSlug(), responseFirstIngredient.getSlug());
     }
 }

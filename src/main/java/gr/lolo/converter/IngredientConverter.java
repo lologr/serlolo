@@ -13,7 +13,7 @@ public class IngredientConverter implements Converter<Ingredient, IngredientReso
         IngredientResource resource = new IngredientResource();
 
         resource.setId(source.getSlug());
-        resource.setName(source.getName());
+        resource.setName(source.getIngredient());
 
         return resource;
     }

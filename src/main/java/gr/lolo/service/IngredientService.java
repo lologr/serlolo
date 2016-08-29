@@ -25,14 +25,14 @@ public class IngredientService {
     private IngredientConverter ingredientConverter;
 
     public Ingredient upsertIngredient(Ingredient ingredient) {
-        return upsertIngredient(ingredient.getName());
+        return upsertIngredient(ingredient.getIngredient());
     }
 
     public Ingredient upsertIngredient(String name) {
-        Optional<Ingredient> ingr = ingredientRepository.findOneByName(name);
+        Optional<Ingredient> ingr = ingredientRepository.findOneByIngredient(name);
         return ingr.orElseGet(() -> {
             Ingredient newIngr = new Ingredient();
-            newIngr.setName(name);
+            newIngr.setIngredient(name);
             newIngr.setSlug(slugifier.slugify(name));
             return ingredientRepository.save(newIngr);
         });

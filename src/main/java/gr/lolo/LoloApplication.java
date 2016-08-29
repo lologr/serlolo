@@ -43,7 +43,7 @@ public class LoloApplication {
 //
 //            repo.save(rNew);
 
-            System.out.println(recipeService.findRecipeById("auga-me-patates"));
+//            System.out.println(recipeService.findRecipeById("auga-me-patates"));
 
 
 

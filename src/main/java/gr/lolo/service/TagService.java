@@ -22,7 +22,7 @@ public class TagService {
     }
 
     public Tag upsertTag(String name) {
-        Optional<Tag> ingr = tagRepository.findOneByName(name);
+        Optional<Tag> ingr = tagRepository.findOneByTag(name);
         return ingr.orElseGet(() -> {
             Tag newTag = new Tag();
             newTag.setTag(name);

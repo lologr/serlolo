@@ -20,7 +20,7 @@ public class Tag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "recipeId", nullable = false)
+    @Column(name = "tag_id", nullable = false)
     private Long tagId;
 
     @Column(name = "slug", nullable = false)
@@ -50,7 +50,7 @@ public class Tag {
     @Override
     public String toString() {
         return "Tag{" +
-                "recipeId=" + tagId +
+                "tagId=" + tagId +
                 ", slug='" + slug + '\'' +
                 ", title='" + tag + '\'' +
                 ", recipes=" + recipes.stream().map(Recipe::getTitle)

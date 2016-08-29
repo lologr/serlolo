@@ -20,13 +20,14 @@ public class Ingredient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "recipeId", nullable = false)
-    private Long id;
+    @Column(name = "ingredient_id", nullable = false)
+    private Long ingredientId;
 
     @Column(name = "slug", nullable = false)
     private String slug;
 
-    private String name;
+    @Column(name = "ingredient", nullable = false)
+    private String ingredient;
 
     @ManyToMany(mappedBy = "ingredients")
     private Set<Recipe> recipes = new HashSet<>();
@@ -38,21 +39,21 @@ public class Ingredient {
 
         Ingredient that = (Ingredient) o;
 
-        return id != null ? id.equals(that.id) : that.id == null;
+        return ingredientId != null ? ingredientId.equals(that.ingredientId) : that.ingredientId == null;
 
     }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        return ingredientId != null ? ingredientId.hashCode() : 0;
     }
 
     @Override
     public String toString() {
         return "Ingredient{" +
-                "recipeId=" + id +
+                "ingredientId=" + ingredientId +
                 ", slug='" + slug + '\'' +
-                ", title='" + name + '\'' +
+                ", title='" + ingredient + '\'' +
                 ", recipes=" + recipes.stream().map(Recipe::getTitle)
                 .collect(Collectors.joining(",")) +
                 '}';
