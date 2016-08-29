@@ -18,14 +18,14 @@ public class TagService {
     private Slugifier slugifier;
 
     public Tag upsertTag(Tag tag) {
-        return upsertTag(tag.getName());
+        return upsertTag(tag.getTag());
     }
 
     public Tag upsertTag(String name) {
         Optional<Tag> ingr = tagRepository.findOneByName(name);
         return ingr.orElseGet(() -> {
             Tag newTag = new Tag();
-            newTag.setName(name);
+            newTag.setTag(name);
             newTag.setSlug(slugifier.slugify(name));
             return tagRepository.save(newTag);
         });

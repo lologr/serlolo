@@ -20,7 +20,7 @@ public class Ingredient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "recipeId", nullable = false)
     private Long id;
 
     @Column(name = "slug", nullable = false)
@@ -50,10 +50,10 @@ public class Ingredient {
     @Override
     public String toString() {
         return "Ingredient{" +
-                "id=" + id +
+                "recipeId=" + id +
                 ", slug='" + slug + '\'' +
-                ", name='" + name + '\'' +
-                ", recipes=" + recipes.stream().map(Recipe::getName)
+                ", title='" + name + '\'' +
+                ", recipes=" + recipes.stream().map(Recipe::getTitle)
                 .collect(Collectors.joining(",")) +
                 '}';
     }

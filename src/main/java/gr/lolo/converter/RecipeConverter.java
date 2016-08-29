@@ -22,7 +22,7 @@ public class RecipeConverter implements Converter<Recipe, RecipeResource> {
         RecipeResource resource = new RecipeResource();
 
         resource.setId(recipe.getSlug());
-        resource.setName(recipe.getName());
+        resource.setName(recipe.getTitle());
 
         resource.setIngredients(recipe.getIngredients()
                 .stream().map(ingredientConverter::convert)

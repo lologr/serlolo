@@ -34,12 +34,12 @@ public class RecipeService {
     @Autowired
     private RecipeConverter recipeConverter;
 
-//    public Recipe insert(String name, String ingrName, String ... otherIngrNames) {
+//    public Recipe insert(String title, String ingrName, String ... otherIngrNames) {
 //        Set<String> ingrs = new HashSet<>(Arrays.asList(otherIngrNames));
 //        ingrs.add(ingrName);
 //
 //        Recipe recipe = new Recipe();
-//        recipe.setName(name);
+//        recipe.setTitle(title);
 //
 //        Set<Ingredient> collect = ingrs.stream().map(ingredientService::upsertIngredient)
 //                .collect(Collectors.toSet());
@@ -53,7 +53,7 @@ public class RecipeService {
     public RecipeResource save(RecipeResource resource) {
         Recipe recipe = new Recipe();
         recipe.setSlug(slugifier.slugify(resource.getName()));
-        recipe.setName(resource.getName());
+        recipe.setTitle(resource.getName());
 
         Set<Ingredient> newIngrs = resource.getIngredients().stream()
                 .map(IngredientResource::getName)
@@ -76,7 +76,7 @@ public class RecipeService {
     }
 
     private Recipe upsertRecipe(Recipe recipe) {
-        Optional<Recipe> foundByName = recipeRepository.findOneByName(recipe.getName());
+        Optional<Recipe> foundByName = recipeRepository.findOneByName(recipe.getTitle());
         if (foundByName.isPresent()) {
             Recipe existingRecipe = foundByName.get();
             existingRecipe.setIngredients(recipe.getIngredients());

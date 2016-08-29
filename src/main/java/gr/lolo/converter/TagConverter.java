@@ -13,7 +13,7 @@ public class TagConverter implements Converter<Tag, TagResource> {
         TagResource resource = new TagResource();
 
         resource.setId(source.getSlug());
-        resource.setName(source.getName());
+        resource.setName(source.getTag());
 
         return resource;
     }

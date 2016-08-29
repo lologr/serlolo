@@ -20,16 +20,16 @@ public class Tag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @Column(name = "recipeId", nullable = false)
+    private Long tagId;
 
     @Column(name = "slug", nullable = false)
     private String slug;
 
     @Column(unique = true)
-    private String name;
+    private String tag;
 
-    @ManyToMany(mappedBy = "ingredients")
+    @ManyToMany(mappedBy = "tags")
     private Set<Recipe> recipes = new HashSet<>();
 
     @Override
@@ -39,21 +39,21 @@ public class Tag {
 
         Tag tag = (Tag) o;
 
-        return id != null ? id.equals(tag.id) : tag.id == null;
+        return tagId != null ? tagId.equals(tag.tagId) : tag.tagId == null;
     }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        return tagId != null ? tagId.hashCode() : 0;
     }
 
     @Override
     public String toString() {
         return "Tag{" +
-                "id=" + id +
+                "recipeId=" + tagId +
                 ", slug='" + slug + '\'' +
-                ", name='" + name + '\'' +
-                ", recipes=" + recipes.stream().map(Recipe::getName)
+                ", title='" + tag + '\'' +
+                ", recipes=" + recipes.stream().map(Recipe::getTitle)
                 .collect(Collectors.joining(",")) +
                 '}';
     }

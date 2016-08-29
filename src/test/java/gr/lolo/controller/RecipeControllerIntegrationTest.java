@@ -26,7 +26,7 @@ public class RecipeControllerIntegrationTest {
     @Test
     public void creating_recipe_with_the_same_name() {
         Recipe recipe = new Recipe();
-        recipe.setName("foo1");
+        recipe.setTitle("foo1");
 
         rest.postForEntity("/api/recipes", recipe, Recipe.class);
         ResponseEntity<Recipe> response = rest.postForEntity("/api/recipes", recipe, Recipe.class);

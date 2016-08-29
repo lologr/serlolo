@@ -31,7 +31,7 @@ public class LoloApplication {
 //            Ingredient i2 = ingredientService.upsertIngredient("patates");
 //
 //            Recipe r = new Recipe();
-//            r.setName("auga me patates");
+//            r.setTitle("auga me patates");
 //            r.setSlug("auga-me-patates");
 //            Set<Ingredient> ingrs = new HashSet<>(Arrays.asList(i1, i2));
 //            r.setIngredients(ingrs);
