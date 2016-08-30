@@ -12,8 +12,8 @@ import java.util.Optional;
 @Repository
 public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
 
-    @Query("select i from ingredient i where i.ingredient like :name%")
-    List<Ingredient> startsWith(@Param("ingredient") String name);
+    @Query("select i from ingredient i where i.ingredient like :ingredient%")
+    List<Ingredient> startWith(@Param("ingredient") String name);
 
     Optional<Ingredient> findOneByIngredient(String ingredient);
 }

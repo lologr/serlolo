@@ -62,64 +62,64 @@ public class IngredientQueryControllerTest {
     @Before
     public void setup() {
         recipe1 = new Recipe();
-        recipe1.setName("recipe one");
-        recipe1.setSlug(slugifier.slugify(recipe1.getName()));
+        recipe1.setTitle("recipe one");
+        recipe1.setSlug(slugifier.slugify(recipe1.getTitle()));
 
         recipe2 = new Recipe();
-        recipe2.setName("recipe two");
-        recipe2.setSlug(slugifier.slugify(recipe2.getName()));
+        recipe2.setTitle("recipe two");
+        recipe2.setSlug(slugifier.slugify(recipe2.getTitle()));
 
         recipe3 = new Recipe();
-        recipe3.setName("recipe three");
-        recipe3.setSlug(slugifier.slugify(recipe3.getName()));
+        recipe3.setTitle("recipe three");
+        recipe3.setSlug(slugifier.slugify(recipe3.getTitle()));
 
         fooIngredient = new Ingredient();
-        fooIngredient.setName("foo ingredient");
-        fooIngredient.setSlug(slugifier.slugify(fooIngredient.getName()));
+        fooIngredient.setIngredient("foo ingredient");
+        fooIngredient.setSlug(slugifier.slugify(fooIngredient.getIngredient()));
 
         ingredient1 = new Ingredient();
-        ingredient1.setName("ingredient one");
-        ingredient1.setSlug(slugifier.slugify(ingredient1.getName()));
+        ingredient1.setIngredient("ingredient one");
+        ingredient1.setSlug(slugifier.slugify(ingredient1.getIngredient()));
 
         ingredient2 = new Ingredient();
-        ingredient2.setName("ingredient two");
-        ingredient2.setSlug(slugifier.slugify(ingredient2.getName()));
+        ingredient2.setIngredient("ingredient two");
+        ingredient2.setSlug(slugifier.slugify(ingredient2.getIngredient()));
 
         ingredient3 = new Ingredient();
-        ingredient3.setName("ingredient three");
-        ingredient3.setSlug(slugifier.slugify(ingredient3.getName()));
+        ingredient3.setIngredient("ingredient three");
+        ingredient3.setSlug(slugifier.slugify(ingredient3.getIngredient()));
 
         ingredient4 = new Ingredient();
-        ingredient4.setName("ingredient four");
-        ingredient4.setSlug(slugifier.slugify(ingredient4.getName()));
+        ingredient4.setIngredient("ingredient four");
+        ingredient4.setSlug(slugifier.slugify(ingredient4.getIngredient()));
 
         ingredient5 = new Ingredient();
-        ingredient5.setName("ingredient five");
-        ingredient5.setSlug(slugifier.slugify(ingredient5.getName()));
+        ingredient5.setIngredient("ingredient five");
+        ingredient5.setSlug(slugifier.slugify(ingredient5.getIngredient()));
 
         ingredient6 = new Ingredient();
-        ingredient6.setName("ingredient six");
-        ingredient6.setSlug(slugifier.slugify(ingredient6.getName()));
+        ingredient6.setIngredient("ingredient six");
+        ingredient6.setSlug(slugifier.slugify(ingredient6.getIngredient()));
 
         ingredient7 = new Ingredient();
-        ingredient7.setName("ingredient seven");
-        ingredient7.setSlug(slugifier.slugify(ingredient7.getName()));
+        ingredient7.setIngredient("ingredient seven");
+        ingredient7.setSlug(slugifier.slugify(ingredient7.getIngredient()));
 
         ingredient8 = new Ingredient();
-        ingredient8.setName("ingredient eight");
-        ingredient8.setSlug(slugifier.slugify(ingredient8.getName()));
+        ingredient8.setIngredient("ingredient eight");
+        ingredient8.setSlug(slugifier.slugify(ingredient8.getIngredient()));
 
         ingredient9 = new Ingredient();
-        ingredient9.setName("ingredient NEEEIN");
-        ingredient9.setSlug(slugifier.slugify(ingredient9.getName()));
+        ingredient9.setIngredient("ingredient NEEEIN");
+        ingredient9.setSlug(slugifier.slugify(ingredient9.getIngredient()));
 
         ingredient10 = new Ingredient();
-        ingredient10.setName("ingredient ten");
-        ingredient10.setSlug(slugifier.slugify(ingredient10.getName()));
+        ingredient10.setIngredient("ingredient ten");
+        ingredient10.setSlug(slugifier.slugify(ingredient10.getIngredient()));
 
         ingredient11 = new Ingredient();
-        ingredient11.setName("ingredient eleven");
-        ingredient11.setSlug(slugifier.slugify(ingredient11.getName()));
+        ingredient11.setIngredient("ingredient eleven");
+        ingredient11.setSlug(slugifier.slugify(ingredient11.getIngredient()));
 
         ingredients = new ArrayList<>(asList(fooIngredient, ingredient1, ingredient2, ingredient3, ingredient4, ingredient5,
                 ingredient6, ingredient7, ingredient8, ingredient9, ingredient10, ingredient11));
@@ -158,15 +158,15 @@ public class IngredientQueryControllerTest {
         List<IngredientResource> responseIngredients = response.getBody();
 
         IngredientResource ingredientResource3 = new IngredientResource();
-        ingredientResource3.setName(ingredient3.getName());
+        ingredientResource3.setName(ingredient3.getIngredient());
         ingredientResource3.setId(ingredient3.getSlug());
 
         IngredientResource ingredientResource4 = new IngredientResource();
-        ingredientResource4.setName(ingredient4.getName());
+        ingredientResource4.setName(ingredient4.getIngredient());
         ingredientResource4.setId(ingredient4.getSlug());
 
         IngredientResource ingredientResource2 = new IngredientResource();
-        ingredientResource2.setName(ingredient2.getName());
+        ingredientResource2.setName(ingredient2.getIngredient());
         ingredientResource2.setId(ingredient2.getSlug());
 
         List<IngredientResource> ingredientResources = ingredients.stream()
@@ -179,8 +179,8 @@ public class IngredientQueryControllerTest {
         ingredientResources.remove(ingredientResource3);
         ingredientResources.remove(ingredientResource4);
         ingredientResources.remove(ingredientResource2);
-        ingredientResources.removeIf(ingredientResource -> ingredientResource.getName().equals(ingredient11.getName()));
-        ingredientResources.removeIf(ingredientResource -> ingredientResource.getName().equals(fooIngredient.getName()));
+        ingredientResources.removeIf(ingredientResource -> ingredientResource.getName().equals(ingredient11.getIngredient()));
+        ingredientResources.removeIf(ingredientResource -> ingredientResource.getName().equals(fooIngredient.getIngredient()));
         assertThat(responseIngredients.subList(3, responseIngredients.size()),
                 containsInAnyOrder(ingredientResources.toArray()));
     }
