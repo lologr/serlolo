@@ -50,9 +50,9 @@ def dbUrl = 'JDBC_DATABASE_URL'
 def dbUser = 'JDBC_DATABASE_USERNAME'
 def dbPass = 'JDBC_DATABASE_PASSWORD'
 
-project.ext['flyway.url']=System.getProperty(dbUrl, System.getenv(dbUrl))
-project.ext['flyway.user']=System.getProperty(dbUser, System.getenv(dbUser))
-project.ext['flyway.password']=System.getProperty(dbPass, System.getenv(dbPass))
+project.ext['flyway.url']=System.getenv(dbUrl)
+project.ext['flyway.user']=System.getenv(dbUser)
+project.ext['flyway.password']=System.getenv(dbPass)
 
 task stage {
     dependsOn clean, assemble, flywayMigrate
