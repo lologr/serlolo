@@ -54,11 +54,8 @@ project.ext['flyway.url']=System.getProperty(dbUrl, System.getenv(dbUrl))
 project.ext['flyway.user']=System.getProperty(dbUser, System.getenv(dbUser))
 project.ext['flyway.password']=System.getProperty(dbPass, System.getenv(dbPass))
 
-bootRun.dependsOn flywayMigrate
-test.dependsOn flywayMigrate
-
 task stage {
-    dependsOn clean, build, flywayMigrate
+    dependsOn clean, assemble, flywayMigrate
 }
 
 eclipse {
