@@ -1,10 +1,9 @@
 package gr.lolo.config;
 
-import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.sql.DataSource;
 import java.net.URISyntaxException;
 
 @Configuration
@@ -12,15 +11,20 @@ public class DatabaseConfig {
 
     @Bean
     public DataSource dataSource() throws URISyntaxException {
-        String dbUrl = System.getProperty("JDBC_DATABASE_URL");
-        String username = System.getProperty("JDBC_DATABASE_USERNAME");
-        String password = System.getProperty("JDBC_DATABASE_PASSWORD");
+        String dbUrl = System.getenv("JDBC_DATABASE_URL");
+        String username = System.getenv("JDBC_DATABASE_USERNAME");
+        String password = System.getenv("JDBC_DATABASE_PASSWORD");
 
-        BasicDataSource basicDataSource = new BasicDataSource();
-        basicDataSource.setUrl(dbUrl);
-        basicDataSource.setUsername(username);
-        basicDataSource.setPassword(password);
+        DataSource dataSource = new DataSource();
+        dataSource.setDriverClassName("org.postgresql.Driver");
+        dataSource.setUrl(dbUrl);
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
+        dataSource.setTestOnBorrow(true);
+        dataSource.setTestWhileIdle(true);
+        dataSource.setTestOnReturn(true);
+        dataSource.setValidationQuery("SELECT 1");
 
-        return basicDataSource;
+        return dataSource;
     }
 }
