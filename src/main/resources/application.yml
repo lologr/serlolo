@@ -1,7 +1,5 @@
 datasource:
     driverClassName: org.postgresql.Driver
-server:
-    port: 9999
 spring:
     datasource:
         initialSize: 5
