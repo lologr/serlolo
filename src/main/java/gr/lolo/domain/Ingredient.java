@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "slug",
         scope = Recipe.class)
-public class Ingredient {
+public class Ingredient extends BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
