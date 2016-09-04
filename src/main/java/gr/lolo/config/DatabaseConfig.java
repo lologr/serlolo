@@ -11,9 +11,14 @@ public class DatabaseConfig {
 
     @Bean
     public DataSource dataSource() throws URISyntaxException {
-        String dbUrl = System.getenv("JDBC_DATABASE_URL");
-        String username = System.getenv("JDBC_DATABASE_USERNAME");
-        String password = System.getenv("JDBC_DATABASE_PASSWORD");
+
+        String dbUrlParam = "JDBC_DATABASE_URL";
+        String dbUserParam = "JDBC_DATABASE_USERNAME";
+        String dbPassParam = "JDBC_DATABASE_PASSWORD";
+
+        String dbUrl = System.getProperty(dbUrlParam, System.getenv(dbUrlParam));
+        String username = System.getProperty(dbUserParam, System.getenv(dbUserParam));
+        String password = System.getProperty(dbPassParam, System.getenv(dbPassParam));
 
         DataSource dataSource = new DataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");

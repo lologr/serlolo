@@ -46,12 +46,20 @@ dependencies {
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
-project.ext['flyway.url']=System.getenv()['JDBC_DATABASE_URL']
-project.ext['flyway.user']=System.getenv()['JDBC_DATABASE_USERNAME']
-project.ext['flyway.password']=System.getenv()['JDBC_DATABASE_PASSWORD']
+def dbUrl = 'JDBC_DATABASE_URL'
+def dbUser = 'JDBC_DATABASE_USERNAME'
+def dbPass = 'JDBC_DATABASE_PASSWORD'
+
+project.ext['flyway.url']=System.getProperty(dbUrl, System.getenv(dbUrl))
+project.ext['flyway.user']=System.getProperty(dbUser, System.getenv(dbUser))
+project.ext['flyway.password']=System.getProperty(dbPass, System.getenv(dbPass))
 
 bootRun.dependsOn flywayMigrate
 test.dependsOn flywayMigrate
+
+task stage {
+    dependsOn clean, build, flywayMigrate
+}
 
 eclipse {
 	classpath {
