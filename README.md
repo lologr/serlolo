@@ -3,7 +3,7 @@
 ## Prerequisites
 
 Create two `postgres` databases. One for running the app and the other for
-the intergration tests.
+the integration tests.
 
 ## Overrides
 
