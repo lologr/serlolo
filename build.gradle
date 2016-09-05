@@ -56,10 +56,6 @@ project.ext['flyway.url']=System.getenv(dbUrl)
 project.ext['flyway.user']=System.getenv(dbUser)
 project.ext['flyway.password']=System.getenv(dbPass)
 
-task stage {
-    dependsOn clean, assemble, flywayMigrate
-}
-
 eclipse {
 	classpath {
 		 containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
