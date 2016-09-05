@@ -42,6 +42,8 @@ dependencies {
 
 	compile('org.apache.commons:commons-lang3:3.0')
 
+    compile('org.flywaydb:flyway-core:4.0.3')
+
 	runtime('org.postgresql:postgresql')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
