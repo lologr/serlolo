@@ -40,4 +40,4 @@ before_script:
 # (compile, test, integrationTest, war, assemble).
 build:
  script: 
-   - ./gradlew build -DJDBC_DATABASE_URL=jdbc:postgresql://localhost:5432/nice_marmot -DJDBC_DATABASE_USERNAME=runner -DJDBC_DATABASE_PASSWORD=
+   - ./gradlew build -DJDBC_DATABASE_URL=jdbc:postgresql://postgres:5432/nice_marmot -DJDBC_DATABASE_USERNAME=runner -DJDBC_DATABASE_PASSWORD=
