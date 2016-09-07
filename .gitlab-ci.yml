@@ -37,14 +37,13 @@ before_script:
    - ./gradlew --refresh-dependencies
    
 # postgres env vars   
-   - declare -x JDBC_DATABASE_URL=jdbc:postgresql://postgres:5432/nice_marmot
+   - declare -x JDBC_DATABASE_URL=jdbc:postgresql://postgres@postgres:5432/nice_marmot
    - declare -x JDBC_DATABASE_USERNAME=runner
    - declare -x JDBC_DATABASE_PASSWORD=
 
 # This build job does the full grails pipeline
 # (compile, test, integrationTest, war, assemble).
 
-connect:
-   image: postgres
+build:
    script: 
       - ./gradlew build --info
