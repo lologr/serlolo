@@ -17,10 +17,7 @@ services:
 variables:
   POSTGRES_DB: nice_marmot
   POSTGRES_USER: runner
-  POSTGRES_PASSWORD: ""
-  JDBC_DATABASE_URL: jdbc:postgresql://postgres:5432/nice_marmot
-  JDBC_DATABASE_USERNAME: lolotest
-  JDBC_DATABASE_PASSWORD: ""
+  POSTGRES_PASSWORD: runner
 
 variables:
   GRADLE_VERSION: "2.14"
@@ -38,9 +35,14 @@ before_script:
    - echo gradleWrapperVersion=2.14 >> gradle.properties
 # refresh dependencies from your project   
    - ./gradlew --refresh-dependencies
+   
+# postgres env vars   
+   - declare -x JDBC_DATABASE_URL=jdbc:postgresql://postgres:5432/nice_marmot
+   - declare -x JDBC_DATABASE_USERNAME=runner
+   - declare -x JDBC_DATABASE_PASSWORD=runner
 
 # This build job does the full grails pipeline
 # (compile, test, integrationTest, war, assemble).
 build:
  script: 
-   - ./gradlew build -DJDBC_DATABASE_URL=jdbc:postgresql://postgres:5432/nice_marmot -DJDBC_DATABASE_USERNAME=runner -DJDBC_DATABASE_PASSWORD=
+   - ./gradlew build
