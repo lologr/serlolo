@@ -43,6 +43,8 @@ before_script:
 
 # This build job does the full grails pipeline
 # (compile, test, integrationTest, war, assemble).
-build:
- script: 
-   - ./gradlew build --info
+
+connect:
+   image: postgres
+   script: 
+      - ./gradlew build --info
