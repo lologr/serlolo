@@ -45,4 +45,4 @@ before_script:
 # (compile, test, integrationTest, war, assemble).
 build:
  script: 
-   - ./gradlew build
+   - ./gradlew build --info
