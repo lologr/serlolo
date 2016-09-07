@@ -18,6 +18,9 @@ variables:
   POSTGRES_DB: nice_marmot
   POSTGRES_USER: runner
   POSTGRES_PASSWORD: ""
+  JDBC_DATABASE_URL: jdbc:postgresql://postgres:5432/nice_marmot
+  JDBC_DATABASE_USERNAME: lolotest
+  JDBC_DATABASE_PASSWORD: ""
 
 variables:
   GRADLE_VERSION: "2.14"
