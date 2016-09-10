@@ -23,6 +23,9 @@ CREATE TABLE recipe_ingredient
 (
   recipe_id int REFERENCES recipe (recipe_id) ON UPDATE CASCADE ON DELETE CASCADE,
   ingredient_id int REFERENCES ingredient (ingredient_id) ON UPDATE CASCADE ON DELETE CASCADE,
+  slug VARCHAR (255) NOT NULL,
+  name VARCHAR (255),
+  notes VARCHAR (255),
   created_at timestamptz NOT NULL DEFAULT now(),
   updated_at timestamptz NOT NULL DEFAULT now(),
   CONSTRAINT recipe_ingredient_pkey PRIMARY KEY (recipe_id, ingredient_id)

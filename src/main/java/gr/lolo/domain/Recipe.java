@@ -5,7 +5,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -27,13 +29,9 @@ public class Recipe extends BaseModel {
 
     private String instructions;
 
-    @ManyToMany
-    @JoinTable(
-            name = "recipe_ingredient",
-            joinColumns = @JoinColumn(name = "recipe_id", referencedColumnName = "recipe_id"),
-            inverseJoinColumns = @JoinColumn(name = "ingredient_id", referencedColumnName = "ingredient_id")
-    )
-    private Set<Ingredient> ingredients = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "recipe_id")
+    private Set<RecipeIngredient> recipeIngredients = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -47,10 +45,10 @@ public class Recipe extends BaseModel {
 
     private Integer difficulty;
 
-    public void addIngredient(Ingredient ingredient) {
-        ingredients.add(ingredient);
-        ingredient.getRecipes().add(this);
-    }
+//    public void addIngredient(Ingredient ingredient) {
+//        ingredients.add(ingredient);
+//        ingredient.getRecipes().add(this);
+//    }
 
     @Override
     public boolean equals(Object o) {

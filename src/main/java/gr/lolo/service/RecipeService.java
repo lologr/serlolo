@@ -3,7 +3,9 @@ package gr.lolo.service;
 import gr.lolo.converter.RecipeConverter;
 import gr.lolo.domain.Ingredient;
 import gr.lolo.domain.Recipe;
+import gr.lolo.domain.RecipeIngredient;
 import gr.lolo.domain.Tag;
+import gr.lolo.repository.IngredientRepository;
 import gr.lolo.repository.RecipeRepository;
 import gr.lolo.resource.IngredientResource;
 import gr.lolo.resource.RecipeResource;
@@ -34,34 +36,14 @@ public class RecipeService {
     @Autowired
     private RecipeConverter recipeConverter;
 
-//    public Recipe insert(String title, String ingrName, String ... otherIngrNames) {
-//        Set<String> ingrs = new HashSet<>(Arrays.asList(otherIngrNames));
-//        ingrs.add(ingrName);
-//
-//        Recipe recipe = new Recipe();
-//        recipe.setTitle(title);
-//
-//        Set<Ingredient> collect = ingrs.stream().map(ingredientService::upsertIngredient)
-//                .collect(Collectors.toSet());
-//
-//        recipe.setIngredients(collect);
-//
-//        return save(recipe);
-//    }
+    @Autowired
+    private IngredientRepository ingredientRepository;
 
     @Transactional
     public RecipeResource save(RecipeResource resource) {
         Recipe recipe = new Recipe();
         recipe.setSlug(slugifier.slugify(resource.getName()));
         recipe.setTitle(resource.getName());
-
-        Set<Ingredient> newIngrs = resource.getIngredients().stream()
-                .map(IngredientResource::getName)
-                .distinct()
-                .map(ingredientService::upsertIngredient)
-                .collect(Collectors.toSet());
-
-        recipe.setIngredients(newIngrs);
 
         Set<Tag> newTags = resource.getTags().stream()
                 .map(TagResource::getName)
@@ -71,19 +53,42 @@ public class RecipeService {
 
         recipe.setTags(newTags);
 
-        return recipeConverter.convert(upsertRecipe(recipe));
+        recipe = recipeRepository.save(recipe);
 
+        getRecipeIngredients(resource, recipe).forEach(ingr -> {
+            ingredientRepository.save(ingr);
+        });
+
+        return recipeConverter.convert(recipeRepository.findOne(recipe.getRecipeId()));
     }
 
-    private Recipe upsertRecipe(Recipe recipe) {
-        Optional<Recipe> foundByName = recipeRepository.findOneByTitle(recipe.getTitle());
-        if (foundByName.isPresent()) {
-            Recipe existingRecipe = foundByName.get();
-            existingRecipe.setIngredients(recipe.getIngredients());
-            return recipeRepository.save(existingRecipe);
-        }
-        return recipeRepository.save(recipe);
+    private List<Ingredient> getRecipeIngredients(RecipeResource resource, Recipe recipe) {
+        return resource.getIngredients().stream()
+                    .map(i -> {
+                        Ingredient ingr = new Ingredient();
+                        ingr.setSlug(i.getName());
+                        ingr.setIngredient(i.getName());
+                        RecipeIngredient recIngr = new RecipeIngredient();
+                        recIngr.setRecipe(recipe);
+                        recIngr.setIngredient(ingr);
+                        recIngr.setSlug(recipe.getSlug() + "-" + slugifier.slugify(i.getName()));
+                        recIngr.setName(i.getName());
+                        recIngr.setNotes(i.getNotes());
+                        ingr.getRecipeIngredients().add(recIngr);
+                        return ingr;
+                    })
+                    .collect(Collectors.toList());
     }
+
+//    private Recipe upsertRecipe(Recipe recipe) {
+//        Optional<Recipe> foundByName = recipeRepository.findOneByTitle(recipe.getTitle());
+//        if (foundByName.isPresent()) {
+//            Recipe existingRecipe = foundByName.get();
+//            existingRecipe.setIngredients(recipe.getIngredients());
+//            return recipeRepository.save(existingRecipe);
+//        }
+//        return recipeRepository.save(recipe);
+//    }
 
     public List<RecipeResource> findAllRecipes() {
         return recipeRepository.findAll()

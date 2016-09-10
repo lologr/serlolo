@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Getter
 @Setter
-public class IngredientResource {
+public class RecipeIngredientResource {
 
     private String id;
 
@@ -17,10 +17,10 @@ public class IngredientResource {
 
     @Override
     public String toString() {
-        return "IngredientResource{" +
+        return "RecipeIngredientResource{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
+                ", notes='" + notes + '\'' +
                 '}';
     }
-
 }

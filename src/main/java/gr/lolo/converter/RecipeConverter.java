@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class RecipeConverter implements Converter<Recipe, RecipeResource> {
 
     @Autowired
-    private IngredientConverter ingredientConverter;
+    private RecipeIngredientConverter ingredientConverter;
 
     @Autowired
     private TagConverter tagConverter;
@@ -24,7 +24,7 @@ public class RecipeConverter implements Converter<Recipe, RecipeResource> {
         resource.setId(recipe.getSlug());
         resource.setName(recipe.getTitle());
 
-        resource.setIngredients(recipe.getIngredients()
+        resource.setIngredients(recipe.getRecipeIngredients()
                 .stream().map(ingredientConverter::convert)
                 .collect(Collectors.toList()));
 

@@ -29,21 +29,26 @@ public class IngredientService {
     }
 
     public Ingredient upsertIngredient(String name) {
+        return ingredientRepository.save(createIngredient(name));
+    }
+
+    public Ingredient createIngredient(String name) {
         Optional<Ingredient> ingr = ingredientRepository.findOneByIngredient(name);
         return ingr.orElseGet(() -> {
             Ingredient newIngr = new Ingredient();
             newIngr.setIngredient(name);
             newIngr.setSlug(slugifier.slugify(name));
-            return ingredientRepository.save(newIngr);
+            return newIngr;
         });
     }
 
     public List<IngredientResource> getResourceSortedByNumberOfRecipes(List<Ingredient> ingredients, int limit) {
-        return ingredients.stream()
-                .sorted((o1, o2) -> -Integer.compare(o1.getRecipes().size(), o2.getRecipes().size()))
-                .limit(limit)
-                .map(ingredientConverter::convert)
-                .collect(Collectors.toList());
+//        return ingredients.stream()
+//                .sorted((o1, o2) -> -Integer.compare(o1.getRecipes().size(), o2.getRecipes().size()))
+//                .limit(limit)
+//                .map(ingredientConverter::convert)
+//                .collect(Collectors.toList());
+        return null;
     }
 
 }

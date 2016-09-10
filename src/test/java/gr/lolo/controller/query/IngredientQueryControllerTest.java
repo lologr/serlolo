@@ -126,14 +126,14 @@ public class IngredientQueryControllerTest {
 
         ingredientRepository.save(ingredients);
 
-        recipe1.addIngredient(ingredient2);
-
-        recipe1.addIngredient(ingredient3);
-        recipe2.addIngredient(ingredient3);
-        recipe3.addIngredient(ingredient3);
-
-        recipe1.addIngredient(ingredient4);
-        recipe2.addIngredient(ingredient4);
+//        recipe1.addIngredient(ingredient2);
+//
+//        recipe1.addIngredient(ingredient3);
+//        recipe2.addIngredient(ingredient3);
+//        recipe3.addIngredient(ingredient3);
+//
+//        recipe1.addIngredient(ingredient4);
+//        recipe2.addIngredient(ingredient4);
 
         recipe1 = recipeRepository.save(recipe1);
         recipe2 = recipeRepository.save(recipe2);

@@ -29,8 +29,9 @@ public class Ingredient extends BaseModel {
     @Column(name = "ingredient", nullable = false)
     private String ingredient;
 
-    @ManyToMany(mappedBy = "ingredients")
-    private Set<Recipe> recipes = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ingredient_id")
+    private Set<RecipeIngredient> recipeIngredients = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
@@ -54,8 +55,8 @@ public class Ingredient extends BaseModel {
                 "ingredientId=" + ingredientId +
                 ", slug='" + slug + '\'' +
                 ", title='" + ingredient + '\'' +
-                ", recipes=" + recipes.stream().map(Recipe::getTitle)
-                .collect(Collectors.joining(",")) +
+//                ", recipes=" + recipes.stream().map(Recipe::getTitle)
+//                .collect(Collectors.joining(",")) +
                 '}';
     }
 }

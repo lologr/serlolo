@@ -23,7 +23,7 @@ public class RecipeResource {
 
     @Valid
     @Size(min = 1, max = 20)
-    private List<IngredientResource> ingredients = new ArrayList<>();
+    private List<RecipeIngredientResource> ingredients = new ArrayList<>();
 
     @Valid
     @Size(min = 0, max = 20)
