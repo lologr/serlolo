@@ -8,6 +8,7 @@ import gr.lolo.repository.RecipeRepository;
 import gr.lolo.resource.IngredientResource;
 import gr.lolo.util.Slugifier;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -140,6 +141,7 @@ public class IngredientQueryControllerTest {
         recipe3 = recipeRepository.save(recipe3);
     }
 
+    @Ignore
     @Test
     public void get_ingredients_that_start_with_test() {
         UriComponentsBuilder builder =
