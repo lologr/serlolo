@@ -1,5 +1,7 @@
 # LOLO server
 
+[![CircleCI](https://circleci.com/gh/lologr/serlolo.svg?style=svg)](https://circleci.com/gh/lologr/serlolo)
+
 ## Prerequisites
 
 Create two `postgres` databases. One for running the app and the other for
