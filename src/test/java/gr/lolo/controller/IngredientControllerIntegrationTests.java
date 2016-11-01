@@ -5,6 +5,7 @@ import gr.lolo.domain.Ingredient;
 import gr.lolo.util.Slugifier;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
