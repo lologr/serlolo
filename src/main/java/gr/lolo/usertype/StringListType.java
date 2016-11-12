@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class StringListType implements UserType {
     @Override
@@ -59,7 +60,7 @@ public class StringListType implements UserType {
 
     @Override
     public Object deepCopy(Object value) throws HibernateException {
-        return new LinkedList<>((List<String>) value);
+        return value;
     }
 
     @Override
@@ -81,16 +82,6 @@ public class StringListType implements UserType {
     }
 
     private String serialize(List<String> list) {
-        StringBuilder b = new StringBuilder();
-        Iterator<String> iter = list.iterator();
-        b.append("{");
-        while (iter.hasNext()) {
-            b.append(iter.next());
-            if (iter.hasNext()) {
-                b.append(",");
-            }
-        }
-        b.append("}");
-        return b.toString();
+        return list.stream().collect(Collectors.joining(",", "{", "}"));
     }
 }

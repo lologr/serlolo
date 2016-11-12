@@ -2,6 +2,7 @@ package gr.lolo;
 
 import gr.lolo.domain.Ingredient;
 import gr.lolo.domain.Recipe;
+import gr.lolo.domain.RecipeIngredient;
 import gr.lolo.repository.IngredientRepository;
 import gr.lolo.repository.RecipeRepository;
 import gr.lolo.service.IngredientService;
@@ -11,9 +12,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+
+import static org.hibernate.validator.internal.util.CollectionHelper.asSet;
 
 @SpringBootApplication
 public class LoloApplication {
@@ -29,24 +30,31 @@ public class LoloApplication {
         return args -> {
 //            Ingredient i1 = ingredientService.upsertIngredient("augo");
 //            Ingredient i2 = ingredientService.upsertIngredient("patates");
+
+            Recipe r = new Recipe();
+            r.setTitle("auga me patates");
+            r.setSlug("auga-me-patates");
+//            RecipeIngredient ri1 = new RecipeIngredient();
+//            ri1.setRecipe(r);
+//            ri1.setIngredient(i1);
+//            RecipeIngredient ri2 = new RecipeIngredient();
+//            ri2.setRecipe(r);
+//            ri2.setIngredient(i2);
+//            r.setRecipeIngredients(asSet(ri1, ri2));
+
+            List<String> instructions = new ArrayList<>(Arrays.asList("instruction1", "instruction2"));
+            r.setInstructions(instructions);
 //
-//            Recipe r = new Recipe();
-//            r.setTitle("auga me patates");
-//            r.setSlug("auga-me-patates");
-//            Set<Ingredient> ingrs = new HashSet<>(Arrays.asList(i1, i2));
-//            r.setIngredients(ingrs);
+            Recipe rNew = repo.save(r);
 //
-//
-//            Recipe rNew = repo.save(r);
-////
 //            rNew.setPrepTime(5);
 //
 //            repo.save(rNew);
+//
+            System.out.println(recipeService.findRecipeById("auga-me-patates"));
 
-//            System.out.println(recipeService.findRecipeById("auga-me-patates"));
 
-
-
+//
 //            recipeService.insert("i1", "a", "b");
 //            recipeService.insert("i2", "a", "c");
 //            recipeService.insert("i3", "a", "b", "c");

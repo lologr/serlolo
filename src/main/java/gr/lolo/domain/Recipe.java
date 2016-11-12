@@ -41,6 +41,7 @@ public class Recipe extends BaseModel {
     )
     private Set<Tag> tags = new HashSet<>();
 
+    @Column(name = "prep_time")
     private Integer prepTime;
 
     private Integer difficulty;
