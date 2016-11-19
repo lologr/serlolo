@@ -8,16 +8,15 @@ CREATE TABLE image
   updated_at timestamptz NOT NULL DEFAULT now()
 );
 
-
 CREATE TABLE recipe
 (
   recipe_id serial PRIMARY KEY,
   title VARCHAR (255),
   slug VARCHAR (255) NOT NULL UNIQUE,
-  instructions VARCHAR (255),
+  instructions VARCHAR(255)[] DEFAULT '{}',
   difficulty INTEGER,
   prep_time INTEGER,
-  image_id integer REFERENCES image (image_id),
+  image_id integer REFERENCES image,
   created_at timestamptz NOT NULL DEFAULT now(),
   updated_at timestamptz NOT NULL DEFAULT now()
 );
@@ -32,14 +31,22 @@ CREATE TABLE ingredient
   updated_at timestamptz NOT NULL DEFAULT now()
 );
 
+CREATE TABLE unit
+(
+  name VARCHAR (255) PRIMARY KEY,
+  slug VARCHAR (255) NOT NULL UNIQUE,
+  created_at timestamptz NOT NULL DEFAULT now(),
+  updated_at timestamptz NOT NULL DEFAULT now()
+);
+
 CREATE TABLE recipe_ingredient
 (
-  recipe_id int REFERENCES recipe (recipe_id) ON UPDATE CASCADE ON DELETE CASCADE,
-  ingredient_id int REFERENCES ingredient (ingredient_id) ON UPDATE CASCADE ON DELETE CASCADE,
+  recipe_id int REFERENCES recipe ON UPDATE CASCADE ON DELETE CASCADE,
+  ingredient_id int REFERENCES ingredient ON UPDATE CASCADE ON DELETE CASCADE,
+  unit VARCHAR (255) REFERENCES unit(name) ON UPDATE CASCADE ON DELETE CASCADE,
+  quantity DECIMAL(4,2),
   slug VARCHAR (255) NOT NULL,
   name VARCHAR (255),
-  quantity VARCHAR (255),
-  unit VARCHAR (255),
   notes VARCHAR (255),
   created_at timestamptz NOT NULL DEFAULT now(),
   updated_at timestamptz NOT NULL DEFAULT now(),
@@ -57,29 +64,11 @@ CREATE TABLE tag
 
 CREATE TABLE recipe_tag
 (
-  recipe_id int REFERENCES recipe (recipe_id) ON UPDATE CASCADE ON DELETE CASCADE,
-  tag_id int REFERENCES tag (tag_id) ON UPDATE CASCADE ON DELETE CASCADE,
+  recipe_id int REFERENCES recipe ON UPDATE CASCADE ON DELETE CASCADE,
+  tag_id int REFERENCES tag ON UPDATE CASCADE ON DELETE CASCADE,
   created_at timestamptz NOT NULL DEFAULT now(),
   updated_at timestamptz NOT NULL DEFAULT now(),
   CONSTRAINT recipe_tag_pkey PRIMARY KEY (recipe_id, tag_id)
-);
-
-CREATE TABLE instruction
-(
-  instruction_id serial PRIMARY KEY,
-  ordinal integer,
-  instructions text,
-  created_at timestamptz NOT NULL DEFAULT now(),
-  updated_at timestamptz NOT NULL DEFAULT now()
-);
-
-CREATE TABLE recipe_instruction
-(
-  recipe_id int REFERENCES recipe (recipe_id) ON UPDATE CASCADE ON DELETE CASCADE,
-  instruction_id int REFERENCES instruction (instruction_id) ON UPDATE CASCADE ON DELETE CASCADE,
-  created_at timestamptz NOT NULL DEFAULT now(),
-  updated_at timestamptz NOT NULL DEFAULT now(),
-  CONSTRAINT recipe_instruction_pkey PRIMARY KEY (recipe_id, instruction_id)
 );
 
 CREATE OR REPLACE FUNCTION update_updated_at()
@@ -110,14 +99,10 @@ CREATE TRIGGER update_recipe_tags_updated_at BEFORE UPDATE
   ON recipe_tag FOR EACH ROW EXECUTE PROCEDURE
   update_updated_at();
 
-CREATE TRIGGER update_instruction_updated_at BEFORE UPDATE
-  ON instruction FOR EACH ROW EXECUTE PROCEDURE
-  update_updated_at();
-
-CREATE TRIGGER update_recipe_instructions_updated_at BEFORE UPDATE
-  ON recipe_instruction FOR EACH ROW EXECUTE PROCEDURE
-  update_updated_at();
-
 CREATE TRIGGER update_image_updated_at BEFORE UPDATE
   ON image FOR EACH ROW EXECUTE PROCEDURE
+  update_updated_at();
+
+CREATE TRIGGER update_unit_updated_at BEFORE UPDATE
+ON unit FOR EACH ROW EXECUTE PROCEDURE
   update_updated_at();

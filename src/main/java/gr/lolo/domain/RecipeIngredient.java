@@ -21,6 +21,12 @@ public class RecipeIngredient extends BaseModel {
     @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient;
 
+    @ManyToOne
+    @JoinColumn(name = "unit")
+    private Unit unit;
+
+    private double quantity;
+
     private String slug;
 
     private String name;

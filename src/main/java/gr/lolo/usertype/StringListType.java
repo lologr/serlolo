@@ -5,17 +5,14 @@ import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.usertype.UserType;
 
 import java.io.Serializable;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Types;
+import java.sql.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class StringListType implements UserType {
+
     @Override
     public int[] sqlTypes() {
-        return new int[] { Types.VARCHAR };
+        return new int[] { java.sql.Types.ARRAY };
     }
 
     @Override
@@ -54,7 +51,11 @@ public class StringListType implements UserType {
         if (value == null) {
             st.setNull(index, Types.VARCHAR);
         } else {
-            st.setString(index, serialize((List<String>) value));
+            Connection connection = st.getConnection();
+
+            @SuppressWarnings("unchecked")
+            List<String> castObject = (List<String>) value;
+            st.setArray(index,  connection.createArrayOf("varchar", castObject.toArray()));
         }
     }
 
@@ -79,9 +80,5 @@ public class StringListType implements UserType {
     @Override
     public Object replace(Object original, Object target, Object owner) throws HibernateException {
         return original;
-    }
-
-    private String serialize(List<String> list) {
-        return list.stream().collect(Collectors.joining(",", "{", "}"));
     }
 }

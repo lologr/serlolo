@@ -27,7 +27,7 @@ public class Recipe extends BaseModel {
 
     @Type(type = "gr.lolo.usertype.StringListType")
     @Column(name = "instructions")
-    private List<String> instructions;
+    private List<String> instructions = new LinkedList<>();
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "recipe_id")
