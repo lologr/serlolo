@@ -43,8 +43,8 @@ CREATE TABLE recipe_ingredient
 (
   recipe_id int REFERENCES recipe ON UPDATE CASCADE ON DELETE CASCADE,
   ingredient_id int REFERENCES ingredient ON UPDATE CASCADE ON DELETE CASCADE,
+  quantity DECIMAL(6,2),
   unit VARCHAR (255) REFERENCES unit(name) ON UPDATE CASCADE ON DELETE CASCADE,
-  quantity DECIMAL(4,2),
   slug VARCHAR (255) NOT NULL,
   name VARCHAR (255),
   notes VARCHAR (255),
