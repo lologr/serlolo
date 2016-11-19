@@ -87,21 +87,6 @@ INSERT INTO recipe VALUES (4, 'makaronia me kima kai feta', 'makaronia-me-kima-k
 INSERT INTO recipe VALUES (5, 'mpouti kotopoulo', 'mpouti-kotopoulo', '{"valta sti gastra","kai teleione"}', NULL, NULL, NULL, '2016-11-19 16:15:11.7522+02', '2016-11-19 16:15:11.7572+02');
 INSERT INTO recipe VALUES (6, 'muffin sokolata', 'muffin-sokolata', '{chocoooo,win}', NULL, NULL, NULL, '2016-11-19 16:15:11.7952+02', '2016-11-19 16:15:11.8022+02');
 
-
---
--- TOC entry 2200 (class 0 OID 33697)
--- Dependencies: 188
--- Data for Name: unit; Type: TABLE DATA; Schema: public; Owner: lolo
---
-
-INSERT INTO unit VALUES ('kilo', 'kilo', '2016-11-19 16:15:11.5362+02', '2016-11-19 16:15:11.5362+02');
-INSERT INTO unit VALUES ('gr', 'gr', '2016-11-19 16:15:11.5362+02', '2016-11-19 16:15:11.5362+02');
-INSERT INTO unit VALUES ('koutali glukou', 'koutali-glukou', '2016-11-19 16:15:11.5362+02', '2016-11-19 16:15:11.5362+02');
-INSERT INTO unit VALUES ('koutali soupas', 'koutali soupas', '2016-11-19 16:15:11.5362+02', '2016-11-19 16:15:11.5362+02');
-INSERT INTO unit VALUES ('kommati', 'kommati', '2016-11-19 16:15:11.5362+02', '2016-11-19 16:15:11.5362+02');
-INSERT INTO unit VALUES ('koupa', 'koupa', '2016-11-19 16:15:11.5362+02', '2016-11-19 16:15:11.5362+02');
-
-
 --
 -- TOC entry 2201 (class 0 OID 33709)
 -- Dependencies: 189

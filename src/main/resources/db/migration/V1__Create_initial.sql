@@ -31,20 +31,14 @@ CREATE TABLE ingredient
   updated_at timestamptz NOT NULL DEFAULT now()
 );
 
-CREATE TABLE unit
-(
-  name VARCHAR (255) PRIMARY KEY,
-  slug VARCHAR (255) NOT NULL UNIQUE,
-  created_at timestamptz NOT NULL DEFAULT now(),
-  updated_at timestamptz NOT NULL DEFAULT now()
-);
+CREATE TYPE unit AS ENUM ('kilo', 'gr', 'koutali glukou', 'koutali soupas', 'kommati', 'koupa');
 
 CREATE TABLE recipe_ingredient
 (
   recipe_id int REFERENCES recipe ON UPDATE CASCADE ON DELETE CASCADE,
   ingredient_id int REFERENCES ingredient ON UPDATE CASCADE ON DELETE CASCADE,
   quantity DECIMAL(6,2),
-  unit VARCHAR (255) REFERENCES unit(name) ON UPDATE CASCADE ON DELETE CASCADE,
+  unit unit,
   slug VARCHAR (255) NOT NULL,
   name VARCHAR (255),
   notes VARCHAR (255),
@@ -101,8 +95,4 @@ CREATE TRIGGER update_recipe_tags_updated_at BEFORE UPDATE
 
 CREATE TRIGGER update_image_updated_at BEFORE UPDATE
   ON image FOR EACH ROW EXECUTE PROCEDURE
-  update_updated_at();
-
-CREATE TRIGGER update_unit_updated_at BEFORE UPDATE
-ON unit FOR EACH ROW EXECUTE PROCEDURE
   update_updated_at();

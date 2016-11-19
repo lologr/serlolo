@@ -2,6 +2,7 @@ package gr.lolo.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -21,8 +22,7 @@ public class RecipeIngredient extends BaseModel {
     @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient;
 
-    @ManyToOne
-    @JoinColumn(name = "unit")
+    @Type(type = "gr.lolo.usertype.UnitEnumType")
     private Unit unit;
 
     private double quantity;
