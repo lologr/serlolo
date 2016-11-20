@@ -143,6 +143,7 @@ public class IngredientQueryControllerTest {
 
     @Ignore
     @Test
+    @Ignore
     public void get_ingredients_that_start_with_test() {
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromPath("/api/query/ingredients/startwith").queryParam("name", "");

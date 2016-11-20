@@ -3,12 +3,10 @@ package gr.lolo.domain;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
@@ -27,7 +25,9 @@ public class Recipe extends BaseModel {
     @Column(unique = true)
     private String title;
 
-    private String instructions;
+    @Type(type = "gr.lolo.usertype.StringListType")
+    @Column(name = "instructions")
+    private List<String> instructions = new LinkedList<>();
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "recipe_id")
@@ -41,6 +41,7 @@ public class Recipe extends BaseModel {
     )
     private Set<Tag> tags = new HashSet<>();
 
+    @Column(name = "prep_time")
     private Integer prepTime;
 
     private Integer difficulty;

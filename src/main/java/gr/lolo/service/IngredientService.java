@@ -29,16 +29,12 @@ public class IngredientService {
     }
 
     public Ingredient upsertIngredient(String name) {
-        return ingredientRepository.save(createIngredient(name));
-    }
-
-    public Ingredient createIngredient(String name) {
         Optional<Ingredient> ingr = ingredientRepository.findOneByIngredient(name);
         return ingr.orElseGet(() -> {
             Ingredient newIngr = new Ingredient();
             newIngr.setIngredient(name);
             newIngr.setSlug(slugifier.slugify(name));
-            return newIngr;
+            return ingredientRepository.save(newIngr);
         });
     }
 
