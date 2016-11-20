@@ -141,7 +141,6 @@ public class IngredientQueryControllerTest {
         recipe3 = recipeRepository.save(recipe3);
     }
 
-    @Ignore
     @Test
     @Ignore
     public void get_ingredients_that_start_with_test() {
