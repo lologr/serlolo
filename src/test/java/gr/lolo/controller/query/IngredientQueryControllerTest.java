@@ -2,13 +2,10 @@ package gr.lolo.controller.query;
 
 import gr.lolo.converter.IngredientConverter;
 import gr.lolo.domain.Ingredient;
-import gr.lolo.domain.Recipe;
 import gr.lolo.repository.IngredientRepository;
-import gr.lolo.repository.RecipeRepository;
 import gr.lolo.resource.IngredientResource;
 import gr.lolo.util.Slugifier;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +18,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
-import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -46,146 +41,67 @@ public class IngredientQueryControllerTest {
     private IngredientRepository ingredientRepository;
 
     @Autowired
-    private RecipeRepository recipeRepository;
-
-    @Autowired
     private IngredientConverter ingredientConverter;
 
     @Autowired
     private Slugifier slugifier;
 
-    private Ingredient fooIngredient;
-    private Ingredient ingredient1, ingredient2, ingredient3, ingredient4, ingredient5, ingredient6, ingredient7,
-            ingredient8, ingredient9, ingredient10, ingredient11;
-    private Recipe recipe1, recipe2, recipe3;
-    private List<Ingredient> ingredients;
+    private Ingredient testIngredient1;
+    private Ingredient testIngredient2;
 
     @Before
     public void setup() {
-        recipe1 = new Recipe();
-        recipe1.setTitle("recipe one");
-        recipe1.setSlug(slugifier.slugify(recipe1.getTitle()));
 
-        recipe2 = new Recipe();
-        recipe2.setTitle("recipe two");
-        recipe2.setSlug(slugifier.slugify(recipe2.getTitle()));
+        List<Ingredient> ingredients = IntStream.range(1, 10).mapToObj(i -> {
+            Ingredient ingredient = new Ingredient();
+            ingredient.setIngredient("ingredient " + 1);
+            ingredient.setSlug(slugifier.slugify(ingredient.getIngredient()));
+            return ingredient;
+        }).collect(toList());
 
-        recipe3 = new Recipe();
-        recipe3.setTitle("recipe three");
-        recipe3.setSlug(slugifier.slugify(recipe3.getTitle()));
+        testIngredient1 = new Ingredient();
+        testIngredient1.setIngredient("test ingredient 1");
+        testIngredient1.setSlug(slugifier.slugify(testIngredient1.getIngredient()));
 
-        fooIngredient = new Ingredient();
-        fooIngredient.setIngredient("foo ingredient");
-        fooIngredient.setSlug(slugifier.slugify(fooIngredient.getIngredient()));
+        testIngredient2 = new Ingredient();
+        testIngredient2.setIngredient("test ingredient 2");
+        testIngredient2.setSlug(slugifier.slugify(testIngredient2.getIngredient()));
 
-        ingredient1 = new Ingredient();
-        ingredient1.setIngredient("ingredient one");
-        ingredient1.setSlug(slugifier.slugify(ingredient1.getIngredient()));
+        Ingredient falseTestIngredient3 = new Ingredient();
+        falseTestIngredient3.setIngredient("ingredient test 3");
+        falseTestIngredient3.setSlug(slugifier.slugify(falseTestIngredient3.getIngredient()));
 
-        ingredient2 = new Ingredient();
-        ingredient2.setIngredient("ingredient two");
-        ingredient2.setSlug(slugifier.slugify(ingredient2.getIngredient()));
-
-        ingredient3 = new Ingredient();
-        ingredient3.setIngredient("ingredient three");
-        ingredient3.setSlug(slugifier.slugify(ingredient3.getIngredient()));
-
-        ingredient4 = new Ingredient();
-        ingredient4.setIngredient("ingredient four");
-        ingredient4.setSlug(slugifier.slugify(ingredient4.getIngredient()));
-
-        ingredient5 = new Ingredient();
-        ingredient5.setIngredient("ingredient five");
-        ingredient5.setSlug(slugifier.slugify(ingredient5.getIngredient()));
-
-        ingredient6 = new Ingredient();
-        ingredient6.setIngredient("ingredient six");
-        ingredient6.setSlug(slugifier.slugify(ingredient6.getIngredient()));
-
-        ingredient7 = new Ingredient();
-        ingredient7.setIngredient("ingredient seven");
-        ingredient7.setSlug(slugifier.slugify(ingredient7.getIngredient()));
-
-        ingredient8 = new Ingredient();
-        ingredient8.setIngredient("ingredient eight");
-        ingredient8.setSlug(slugifier.slugify(ingredient8.getIngredient()));
-
-        ingredient9 = new Ingredient();
-        ingredient9.setIngredient("ingredient NEEEIN");
-        ingredient9.setSlug(slugifier.slugify(ingredient9.getIngredient()));
-
-        ingredient10 = new Ingredient();
-        ingredient10.setIngredient("ingredient ten");
-        ingredient10.setSlug(slugifier.slugify(ingredient10.getIngredient()));
-
-        ingredient11 = new Ingredient();
-        ingredient11.setIngredient("ingredient eleven");
-        ingredient11.setSlug(slugifier.slugify(ingredient11.getIngredient()));
-
-        ingredients = new ArrayList<>(asList(fooIngredient, ingredient1, ingredient2, ingredient3, ingredient4, ingredient5,
-                ingredient6, ingredient7, ingredient8, ingredient9, ingredient10, ingredient11));
+        ingredients.add(testIngredient1);
+        ingredients.add(testIngredient2);
+        ingredients.add(falseTestIngredient3);
 
         ingredientRepository.save(ingredients);
 
-//        recipe1.addIngredient(ingredient2);
-//
-//        recipe1.addIngredient(ingredient3);
-//        recipe2.addIngredient(ingredient3);
-//        recipe3.addIngredient(ingredient3);
-//
-//        recipe1.addIngredient(ingredient4);
-//        recipe2.addIngredient(ingredient4);
-
-        recipe1 = recipeRepository.save(recipe1);
-        recipe2 = recipeRepository.save(recipe2);
-        recipe3 = recipeRepository.save(recipe3);
     }
 
-    @Ignore
     @Test
-    @Ignore
     public void get_ingredients_that_start_with_test() {
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromPath("/api/query/ingredients/startwith").queryParam("name", "");
 
         ResponseEntity<List<IngredientResource>> response =
                 testRestTemplate.exchange(builder.build().encode().toUri().toString(), HttpMethod.GET, HttpEntity.EMPTY, ingrListType);
+
         assertTrue(response.getBody().isEmpty());
 
 
-        builder =
-                UriComponentsBuilder.fromPath("/api/query/ingredients/startwith").queryParam("name", "ingredient");
+        builder = UriComponentsBuilder.fromPath("/api/query/ingredients/startwith").queryParam("name", "test");
 
-        response =
-                testRestTemplate.exchange(builder.build().encode().toUri().toString(), HttpMethod.GET, HttpEntity.EMPTY, ingrListType);
+        response = testRestTemplate.exchange(builder.build().encode().toUri().toString(), HttpMethod.GET, HttpEntity.EMPTY, ingrListType);
+
         List<IngredientResource> responseIngredients = response.getBody();
 
-        IngredientResource ingredientResource3 = new IngredientResource();
-        ingredientResource3.setName(ingredient3.getIngredient());
-        ingredientResource3.setId(ingredient3.getSlug());
+        IngredientResource ingredientResource1 = ingredientConverter.convert(testIngredient1);
 
-        IngredientResource ingredientResource4 = new IngredientResource();
-        ingredientResource4.setName(ingredient4.getIngredient());
-        ingredientResource4.setId(ingredient4.getSlug());
+        IngredientResource ingredientResource2 = ingredientConverter.convert(testIngredient2);
 
-        IngredientResource ingredientResource2 = new IngredientResource();
-        ingredientResource2.setName(ingredient2.getIngredient());
-        ingredientResource2.setId(ingredient2.getSlug());
+        assertThat(responseIngredients, contains(ingredientResource1, ingredientResource2));
 
-        List<IngredientResource> ingredientResources = ingredients.stream()
-                .map(ingredientConverter::convert).collect(toList());
-
-
-        assertThat(responseIngredients.subList(0, 3), contains(ingredientResource3, ingredientResource4, ingredientResource2));
-
-
-        ingredientResources.remove(ingredientResource3);
-        ingredientResources.remove(ingredientResource4);
-        ingredientResources.remove(ingredientResource2);
-        ingredientResources.removeIf(ingredientResource -> ingredientResource.getName().equals(ingredient11.getIngredient()));
-        ingredientResources.removeIf(ingredientResource -> ingredientResource.getName().equals(fooIngredient.getIngredient()));
-        assertThat(responseIngredients.subList(3, responseIngredients.size()),
-                containsInAnyOrder(ingredientResources.toArray()));
     }
 
 

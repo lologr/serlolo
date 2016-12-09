@@ -39,12 +39,11 @@ public class IngredientService {
     }
 
     public List<IngredientResource> getResourceSortedByNumberOfRecipes(List<Ingredient> ingredients, int limit) {
-//        return ingredients.stream()
-//                .sorted((o1, o2) -> -Integer.compare(o1.getRecipes().size(), o2.getRecipes().size()))
-//                .limit(limit)
-//                .map(ingredientConverter::convert)
-//                .collect(Collectors.toList());
-        return null;
+        return ingredients.stream()
+                .sorted((i1, i2) -> -Integer.compare(i1.getRecipeIngredients().size(), i2.getRecipeIngredients().size()))
+                .limit(limit)
+                .map(ingredientConverter::convert)
+                .collect(Collectors.toList());
     }
 
 }
